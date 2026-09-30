@@ -1,3 +1,7 @@
+<p align="center">
+  <img alt="Entity Resolver logo" src="docs/assets/images/logo.png" width="96">
+</p>
+
 <h1 align="center">Entity Resolver</h1>
 
 <p align="center">
@@ -70,7 +74,10 @@ On macOS, LightGBM also needs the OpenMP runtime: `brew install libomp`.
 
 ## Full run
 
-1. Put the dataset in `dataset/` as described in [dataset/README.md](dataset/README.md).
+1. Download the dataset from the
+   [dataset download page](https://shanmugaramana.github.io/Entity-Resolver/dataset.html) and unzip
+   it in the repository root. This creates `dataset/`, laid out as described in
+   [dataset/README.md](dataset/README.md).
 2. Install everything, including the embedding extras:
    `pip install -e ".[embed]"`, or `pip install -r requirements.txt` for the exact versions used.
 3. Train and predict:
