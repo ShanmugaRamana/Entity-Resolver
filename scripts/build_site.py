@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
-"""Build the documentation site: web-src/ -> web/ (standard library only).
+"""Build the documentation site: web-src/ -> docs/ (standard library only).
 
 Each file under web-src/pages/ holds the content of one page and nothing else. This script wraps it in
 web-src/layout.html, adds the sidebar (page order from web-src/nav.json, sub-items from the page's
-<h3 id="..."> headings) and the previous/next links, and writes the result to the same path under web/.
-web/assets/ is edited in place and is not touched.
+<h3 id="..."> headings) and the previous/next links, and writes the result to the same path under docs/.
+docs/assets/ is edited in place and is not touched. docs/ is the folder GitHub Pages serves, so
+docs/index.html is the site's starting page; the Markdown files and images already in docs/ are left alone.
 
-It also writes web/search-index.js, the text of every page and sub-heading, which the search box in the
-top bar (web/assets/js/search.js) loads the first time it is used.
+It also writes docs/search-index.js, the text of every page and sub-heading, which the search box in the
+top bar (docs/assets/js/search.js) loads the first time it is used.
 
 A page marked "standalone": true in nav.json is not part of the documentation: it is left out of the
 sidebar and the previous/next chain, and is built without the layout's {{#docs}} ... {{/docs}} blocks
@@ -16,8 +17,8 @@ sidebar and the previous/next chain, and is built without the layout's {{#docs}}
 page takes the place of the Dataset link that leads to it.
 
 Usage:
-    python scripts/build_site.py            # write web/**/*.html
-    python scripts/build_site.py --check    # write nothing; fail if web/ is out of date (used in CI)
+    python scripts/build_site.py            # write docs/**/*.html
+    python scripts/build_site.py --check    # write nothing; fail if docs/ is out of date (used in CI)
 
 The build stops with an error when a page and nav.json disagree, when an id is used twice on a page,
 or when a local link points at a page, heading or file that does not exist.
@@ -32,7 +33,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "web-src"
-OUT = ROOT / "web"
+OUT = ROOT / "docs"
 SITE = "Entity Resolver"
 HOME = "index.html"
 EXTERNAL = ("http://", "https://", "mailto:", "data:", "//")
@@ -211,14 +212,14 @@ def build() -> tuple[dict, list]:
     for stray in sorted(OUT.rglob("*.html")):
         path = stray.relative_to(OUT).as_posix()
         if path not in site:
-            errors.append(f"web/{path} has no source in web-src/pages/ (delete it, or add the page there)")
+            errors.append(f"docs/{path} has no source in web-src/pages/ (delete it, or add the page there)")
     site[SEARCH_INDEX] = search_index(groups)          # added after the link check: it is data, not a page
     return site, errors
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--check", action="store_true", help="write nothing; exit 1 if web/ differs from a fresh build")
+    ap.add_argument("--check", action="store_true", help="write nothing; exit 1 if docs/ differs from a fresh build")
     args = ap.parse_args()
 
     site, errors = build()
@@ -232,16 +233,16 @@ def main():
     if args.check:
         if stale:
             for path in stale:
-                print(f"OUT OF DATE: web/{path}")
+                print(f"OUT OF DATE: docs/{path}")
             print("run: python scripts/build_site.py")
             sys.exit(1)
-        print(f"web/ is up to date ({len(site) - 1} pages and the search index)")
+        print(f"docs/ is up to date ({len(site) - 1} pages and the search index)")
         return
     for path in stale:
         (OUT / path).parent.mkdir(parents=True, exist_ok=True)
         with open(OUT / path, "w", encoding="utf-8", newline="\n") as f:
             f.write(site[path])
-    print(f"built {len(site) - 1} pages and the search index into web/ ({len(stale)} files changed)")
+    print(f"built {len(site) - 1} pages and the search index into docs/ ({len(stale)} files changed)")
 
 
 if __name__ == "__main__":

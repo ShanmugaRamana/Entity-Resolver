@@ -16,3 +16,29 @@ jobs:
       - run: pytest -m "not e2e"
       - run: ruff check src scripts tests
       - run: python scripts/build_site.py --check
+
+  # Publishes the docs/ folder (not the repository root) to GitHub Pages, as committed: the check above
+  # has already failed the run if docs/ is out of date. Runs only for a push to main, after the tests pass.
+  # Needs Settings -> Pages -> Source set to "GitHub Actions".
+  deploy:
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - id: deployment
+        uses: actions/deploy-pages@v4
