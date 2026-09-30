@@ -15,3 +15,4 @@ jobs:
       - run: pip install -e . -r requirements-dev.txt
       - run: pytest -m "not e2e"
       - run: ruff check src scripts tests
+      - run: python scripts/build_site.py --check
