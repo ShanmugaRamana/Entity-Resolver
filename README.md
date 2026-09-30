@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="Entity Resolver logo" src="docs/assets/images/logo.png" width="96">
+  <img alt="Entity Resolver logo" src="docs/assets/images/logo.png" width="76">
 </p>
 
 <h1 align="center">Entity Resolver</h1>
