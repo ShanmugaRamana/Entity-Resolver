@@ -5,8 +5,6 @@ Finds businesses that appear in multiple, messy data sources and links them toge
 Built to be highly accurate, correctly matching the vast majority of businesses.
 </p>
 
-<p align="center"><b>Built with</b></p>
-
 <p align="center">
   <img alt="Python" src="https://img.shields.io/badge/Python-3.11-3776AB?style=flat-square&logo=python&logoColor=white">
   <img alt="NumPy" src="https://img.shields.io/badge/NumPy-013243?style=flat-square&logo=numpy&logoColor=white">
