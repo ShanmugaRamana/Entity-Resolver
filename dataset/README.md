@@ -1,7 +1,9 @@
 # Data
 
-The dataset is not part of this repository. Put it here (or anywhere, and pass `--data-dir` /
-set `ER_DATA_DIR`) with this layout:
+The dataset is not part of this repository. Download `dataset.zip` (about 1 GB) from the
+[dataset download page](https://shanmugaramana.github.io/Entity-Resolver/dataset.html) and unzip
+it in the repository root: it unpacks into this folder. You can also put the data anywhere and
+pass `--data-dir` / set `ER_DATA_DIR`. Either way it needs this layout:
 
 ```
 dataset/
