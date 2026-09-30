@@ -1,0 +1,21 @@
+# --- environments and tool caches ---
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# --- data and run outputs (never committed; see dataset/README.md) ---
+dataset/*
+!dataset/README.md
+work/
+work_*/
+output/
+output_*/
+*.log
+*.zip
+
+# --- OS files ---
+.DS_Store
