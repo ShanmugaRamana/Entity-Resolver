@@ -49,14 +49,14 @@ re-tune there.
 
 ## Highlights
 
-| | |
+| Feature | Description |
 |---|---|
-| ![01](https://img.shields.io/badge/-01-4B8BBE?style=flat-square) **Flipped search direction** | Each S2/S3 record is a query that can belong to at most one S1 business, so conflicting merges are impossible by construction. |
-| ![02](https://img.shields.io/badge/-02-4B8BBE?style=flat-square) **Four retrieval passes** | Keeps 98.5% of true pairs at ~19 candidates per record: character trigrams of the name, address words, name + address words, and nearest neighbours in a multilingual embedding space. |
-| ![03](https://img.shields.io/badge/-03-4B8BBE?style=flat-square) **No hand-written language knowledge** | Abbreviations, spelling variants and legal forms are mined from training matches; filler words, places and place links (city ↔ region) come from each dataset's own statistics. |
-| ![04](https://img.shields.io/badge/-04-4B8BBE?style=flat-square) **Evidence from related records** | Compares each record with the business's other confidently matched records ("siblings") and with competing businesses of the same name, separating house-number noise from a genuinely different business. |
-| ![05](https://img.shields.io/badge/-05-4B8BBE?style=flat-square) **Two-stage LightGBM + cross-encoder** | 77 pair features, 30M training pairs, a second stage that sees each query's competing candidates, and a fine-tuned multilingual cross-encoder for the uncertain band. |
-| ![06](https://img.shields.io/badge/-06-4B8BBE?style=flat-square) **Decision layer built for F0.5** | Precision counts double, so the output set per business maximizes expected F0.5 rather than using a fixed cut-off — every optional step is tuned together and kept only if it measurably helps. |
+| **Flipped search direction** | Each S2/S3 record is a query that can belong to at most one S1 business, so conflicting merges are impossible by construction. |
+| **Four retrieval passes** | Keeps 98.5% of true pairs at ~19 candidates per record: character trigrams of the name, address words, name + address words, and nearest neighbours in a multilingual embedding space. |
+| **No hand-written language knowledge** | Abbreviations, spelling variants and legal forms are mined from training matches; filler words, places and place links (city ↔ region) come from each dataset's own statistics. |
+| **Evidence from related records** | Compares each record with the business's other confidently matched records ("siblings") and with competing businesses of the same name, separating house-number noise from a genuinely different business. |
+| **Two-stage LightGBM + cross-encoder** | 77 pair features, 30M training pairs, a second stage that sees each query's competing candidates, and a fine-tuned multilingual cross-encoder for the uncertain band. |
+| **Decision layer built for F0.5** | Precision counts double, so the output set per business maximizes expected F0.5 rather than using a fixed cut-off — every optional step is tuned together and kept only if it measurably helps. |
 
 ## Quick start (synthetic data, about a minute)
 
